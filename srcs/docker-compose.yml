@@ -1,0 +1,52 @@
+name: inception
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  website:
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      - ./requirements/mariadb/data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PWD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      - inception
+    restart: always
+  wordpress:
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    build: ./requirements/wordpress
+    volumes:
+      - website:/var/www/html
+    ports:
+      - '9000:9000'
+    environment:
+      - WORDPRESS_DB_HOST=${DB_HOST}
+      - WORDPRESS_DB_NAME=${DB_NAME}
+      - WORDPRESS_DB_USER=${DB_USER}
+      - WORDPRESS_DB_PASSWORD=${DB_PWD}
+    networks:
+      - inception
+    restart: always
+  nginx:
+    depends_on:
+      - wordpress
+    container_name: nginx
+    build: ./requirements/nginx
+    volumes:
+    - website:/var/www/html
+    ports:
+      - '443:443'
+    networks:
+      - inception
+    restart: always
