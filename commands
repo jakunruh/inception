@@ -1,0 +1,4 @@
+for logging into db:
+	docker exec -it mariadb mysql -u root -p
+	SHOW DATABASES;
+	USE <name>; (mariadb)
