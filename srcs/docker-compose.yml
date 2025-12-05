@@ -5,19 +5,23 @@ networks:
     driver: bridge
 
 volumes:
-  website:
+  inception_website:
+    external: true
+  inception_database:
+    external: true
 
 services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
+    secrets:
+      - DB_PWD
+      - MYSQL_ROOT_PASSWORD
     volumes:
-      - ./requirements/mariadb/data:/var/lib/mysql
+      - inception_database:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PWD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     networks:
       - inception
     restart: always
@@ -27,14 +31,16 @@ services:
     container_name: wordpress
     build: ./requirements/wordpress
     volumes:
-      - website:/var/www/html
+      - inception_website:/var/www/html
     ports:
       - '9000:9000'
+    secrets:
+      - DB_PWD
     environment:
-      - WORDPRESS_DB_HOST=${DB_HOST}
+      - WORDPRESS_DB_HOST=${DB_HOST}:3306
       - WORDPRESS_DB_NAME=${DB_NAME}
       - WORDPRESS_DB_USER=${DB_USER}
-      - WORDPRESS_DB_PASSWORD=${DB_PWD}
+      - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/DB_PWD
     networks:
       - inception
     restart: always
@@ -44,9 +50,22 @@ services:
     container_name: nginx
     build: ./requirements/nginx
     volumes:
-    - website:/var/www/html
+    - inception_website:/var/www/html
     ports:
       - '443:443'
+    secrets:
+      - NGINX_PRIVKEY
+      - NGINX_CERT
     networks:
       - inception
     restart: always
+
+secrets:
+  DB_PWD:
+    file: ../secrets/db_password.txt
+  MYSQL_ROOT_PASSWORD:
+    file: ../secrets/db_root_password.txt
+  NGINX_PRIVKEY:
+    file: ../secrets/privkey.pem
+  NGINX_CERT:
+    file: ../secrets/cert.pem

@@ -10,10 +10,6 @@ RUN	mkdir -p /var/www/html && \
     tar -xzf /tmp/wordpress.tar.gz -C /var/www/html --strip-components=1 && \
     rm /tmp/wordpress.tar.gz
 
-#RUN find /var/www/html -type d -exec chmod 755 {} \; && \
-#	find /var/www/html -type f -exec chmod 644 {} \; && \
-#	chown -R www-data:www-data /var/www/html 
-
 WORKDIR /var/www/html
 
 EXPOSE 9000

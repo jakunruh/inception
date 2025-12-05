@@ -1,4 +1,8 @@
-for logging into db:
+ logging into db:
 	docker exec -it mariadb mysql -u root -p
 	SHOW DATABASES;
 	USE <name>; (mariadb)
+	SHOW TABLES;
+
+ checking http connection:
+ curl -v http://localhost:PORT
