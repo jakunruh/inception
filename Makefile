@@ -11,10 +11,7 @@ all: build up
 volumes:
 	@mkdir -p $(DB_DIR)
 	@mkdir -p $(WP_DIR)
-#	@sudo chown -R 999:999 $(DB_DIR)
-#	@sudo chown -R 999:999 $(WP_DIR)
-#	@if [ ! -d $(DATA_DIR) ]; then \
-#		mkdir -p $(DATA_DIR); \
+
 	fi
 	@if ! docker volume inspect $(DB_VOL) >/dev/null 2>&1; then \
 		echo "Creating bind mount volume $(DB_VOL)..."; \

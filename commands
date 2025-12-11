@@ -6,3 +6,6 @@
 
  checking http connection:
  curl -v http://localhost:PORT
+
+finding php config:
+find / -name "www.conf" 2>/dev/null
