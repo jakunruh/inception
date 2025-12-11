@@ -104,7 +104,7 @@ make up
 make down
 ```
 
-### Stop containers *and* remove volumes 
+### Stop containers *and* remove volumes (USE WITH CAUTION!)
 
 ```
 make downanddelete
