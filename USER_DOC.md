@@ -105,7 +105,7 @@ docker exec -it <service> bash
 
 two Docker volumes store your data:
 
-* `/home/junruh/data/db` — MariaDB database
-* `/home/junruh/data/wp_files` — WordPress files (themes, plugins, uploads)
+* `/home/junruh/data/inception_database` — MariaDB database
+* `/home/junruh/data/inception_website` — WordPress files (themes, plugins, uploads)
 
 These directories persist even if containers are rebuilt.

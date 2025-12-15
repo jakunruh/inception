@@ -32,8 +32,6 @@ services:
     build: ./requirements/wordpress
     volumes:
       - inception_website:/var/www/html
-    ports:
-      - '9000:9000' 
     secrets:
       - DB_PWD
     environment:

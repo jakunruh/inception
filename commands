@@ -9,3 +9,6 @@
 
 finding php config:
 find / -name "www.conf" 2>/dev/null
+
+ copying folder to vm
+ scp -r -P 2222 ./inception junruh@localhost:/home/junruh

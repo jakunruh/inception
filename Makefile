@@ -12,7 +12,6 @@ volumes:
 	@mkdir -p $(DB_DIR)
 	@mkdir -p $(WP_DIR)
 
-	fi
 	@if ! docker volume inspect $(DB_VOL) >/dev/null 2>&1; then \
 		echo "Creating bind mount volume $(DB_VOL)..."; \
 		docker volume create \
@@ -41,11 +40,11 @@ up: volumes
 down:
 	${DOCKER_COMPOSE} down
 
-downanddelete:
-	${DOCKER_COMPOSE} down -v
-	docker volume rm inception_database
-	docker volume rm inception_website
-	sudo rm -rf $(DATA_DIR)
+#downanddelete:
+#	${DOCKER_COMPOSE} down -v
+#	docker volume rm inception_database
+#	docker volume rm inception_website
+#	sudo rm -rf $(DATA_DIR)
 
 pause:
 	${DOCKER_COMPOSE} pause
